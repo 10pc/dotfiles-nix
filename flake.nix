@@ -12,27 +12,27 @@
 
   outputs = { nixpkgs, lanzaboote, ... }:
   {
-    nixosConfigurations.pavillion = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.pavilion = nixpkgs.lib.nixosSystem {
       system = "x86_64_linux";
 
       modules = [
-        ./hosts/pavillion/configuration.nix
-        ./hosts/pavillion/hardware-configuration.nix
+        ./hosts/pavilion/configuration.nix
+        ./hosts/pavilion/hardware-configuration.nix
 
-	lanzaboote.nixosModules.lanzaboote
+        lanzaboote.nixosModules.lanzaboote
 
-	({ pkgs, lib, ... }: {
+        ({ pkgs, lib, ... }: {
           environment.systemPackages = [
             pkgs.sbctl
-	  ];
+          ];
 
-	  boot.loader.systemd-boot.enable = lib.mkForce false;
+          boot.loader.systemd-boot.enable = lib.mkForce false;
 
-	  boot.lanzaboote = {
+          boot.lanzaboote = {
             enable = true;
-	    pkiBundle = "/var/lib/sbctl";
-	  };
-	})
+            pkiBundle = "/var/lib/sbctl";
+          };
+        })
       ];
     };
   };
