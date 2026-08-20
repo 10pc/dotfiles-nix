@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
@@ -42,6 +42,16 @@
     packages = with pkgs; [
       kdePackages.kate
       gh
+      kitty
+      
+      # sorry not sorry
+      (vscode-with-extensions.override {
+        vscode = vscodium;
+        vscodeExtensions = with vscode-extensions; [
+          jnoortheen.nix-ide
+        ];
+      })
+
     ];
   };
 
@@ -55,10 +65,10 @@
 
   environment.systemPackages = with pkgs; [
      neovim
-     fastfetch-unwrapped
      tailscale
      git
      firefox
+     inputs.quickshell.packages.x86_64-linux.default
   ];
 
   services.tailscale.enable = true;
