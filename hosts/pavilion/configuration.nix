@@ -1,10 +1,14 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -38,7 +42,10 @@
   users.users."kaupec1" = {
     isNormalUser = true;
     description = "k";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -56,12 +63,9 @@
   };
 
   environment.systemPackages = with pkgs; [
-     neovim
-     tailscale
-     git
-     firefox
-     inputs.quickshell.packages.x86_64-linux.default
-     opencode
+    neovim
+    tailscale
+    inputs.quickshell.packages.x86_64-linux.default
   ];
 
   services.tailscale.enable = true;

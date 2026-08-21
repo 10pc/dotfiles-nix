@@ -17,37 +17,52 @@
     };
   };
 
-  outputs = {
-    nixpkgs,
-    lanzaboote,
-    home-manager,
-    ...
-  }@inputs:
-  let
-    lib = nixpkgs.lib;
-  in {
-    nixosConfigurations = {
-      pavilion = lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/pavilion/configuration.nix
+  outputs =
+    {
+      nixpkgs,
+      lanzaboote,
+      home-manager,
+      ...
+    }@inputs:
+    let
+      system = "x86_64-linux";
+      lib = nixpkgs.lib;
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    {
+      nixosConfigurations = {
+        pavilion = lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/pavilion/configuration.nix
 
-          lanzaboote.nixosModules.lanzaboote
-          ({ pkgs, lib, ... }: {
-            environment.systemPackages = [
-              pkgs.sbctl
-            ];
+            lanzaboote.nixosModules.lanzaboote
+            ({ pkgs, lib, ... }: {
+              environment.systemPackages = [
+                pkgs.sbctl
+              ];
 
-            boot.loader.systemd-boot.enable = lib.mkForce false;
+              boot.loader.systemd-boot.enable = lib.mkForce false;
 
-            boot.lanzaboote = {
-              enable = true;
-              pkiBundle = "/var/lib/sbctl";
-              configurationLimit = 10;
-            };
-          })
-        ];
+              boot.lanzaboote = {
+                enable = true;
+                pkiBundle = "/var/lib/sbctl";
+                configurationLimit = 10;
+              };
+            })
+          ];
+        };
+      };
+
+      homeConfigurations = {
+        kde-default = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit inputs; };
+          modules = [ ./hosts/pavilion/rices/kde-default/home.nix ];
+        };
       };
     };
-  };
 }
