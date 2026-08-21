@@ -17,34 +17,37 @@
     };
   };
 
-  outputs = { nixpkgs, lanzaboote, home-manager, ... }@inputs:
-  {
-    nixosConfigurations.pavilion = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hosts/pavilion/configuration.nix
-        ./hosts/pavilion/hardware-configuration.nix
+  outputs = {
+    nixpkgs,
+    lanzaboote,
+    home-manager,
+    ...
+  }@inputs:
+  let
+    lib = nixpkgs.lib;
+  in {
+    nixosConfigurations = {
+      pavilion = lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/pavilion/configuration.nix
 
-        lanzaboote.nixosModules.lanzaboote
-        ({ pkgs, lib, ... }: {
-          environment.systemPackages = [
-            pkgs.sbctl
-          ];
+          lanzaboote.nixosModules.lanzaboote
+          ({ pkgs, lib, ... }: {
+            environment.systemPackages = [
+              pkgs.sbctl
+            ];
 
-          boot.loader.systemd-boot.enable = lib.mkForce false;
+            boot.loader.systemd-boot.enable = lib.mkForce false;
 
-          boot.lanzaboote = {
-            enable = true;
-            pkiBundle = "/var/lib/sbctl";
-          };
-        })
-
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.kaupec1 = import ./home.nix;
-        }
-      ];
+            boot.lanzaboote = {
+              enable = true;
+              pkiBundle = "/var/lib/sbctl";
+              configurationLimit = 10;
+            };
+          })
+        ];
+      };
     };
   };
 }

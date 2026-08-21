@@ -39,20 +39,6 @@
     isNormalUser = true;
     description = "k";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      kdePackages.kate
-      gh
-      kitty
-      
-      # sorry not sorry
-      (vscode-with-extensions.override {
-        vscode = vscodium;
-        vscodeExtensions = with vscode-extensions; [
-          jnoortheen.nix-ide
-        ];
-      })
-
-    ];
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -61,6 +47,12 @@
       "nix-command"
       "flakes"
     ];
+    auto-optimise-store = true;
+  };
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
   };
 
   environment.systemPackages = with pkgs; [
@@ -69,6 +61,7 @@
      git
      firefox
      inputs.quickshell.packages.x86_64-linux.default
+     opencode
   ];
 
   services.tailscale.enable = true;
