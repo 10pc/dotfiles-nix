@@ -5,6 +5,7 @@
     neovim
     tailscale
     devenv
+    anydesk
   ];
 
   programs.zsh.enable = true;

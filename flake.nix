@@ -19,6 +19,10 @@
       url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland = {
+      url = "github:hyprwm/hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -27,6 +31,7 @@
       lanzaboote,
       home-manager,
       chaotic,
+      hyprland,
       ...
     }@inputs:
     let
@@ -68,6 +73,11 @@
           inherit pkgs;
           extraSpecialArgs = { inherit inputs; };
           modules = [ ./hosts/pavilion/rices/kde-default/home.nix ];
+        };
+        hyprland = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit inputs; };
+          modules = [ ./hosts/pavilion/rices/hyprland/home.nix ];
         };
       };
     };

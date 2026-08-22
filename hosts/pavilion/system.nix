@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   boot.loader.efi.canTouchEfiVariables = true;
@@ -13,7 +13,11 @@
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+  };
 
   services.xserver.xkb = {
     layout = "us";
@@ -48,5 +52,14 @@
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
+  };
+
+  nix.settings = {
+    substituters = ["https://hyprland.cachix.org"];
+    trusted-substituters = ["https://hyprland.cachix.org"];
+    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    # Required so non-root users are allowed to use the above substituter/keys.
+    # Use @wheel for all sudo users, or list your username explicitly.s
+    trusted-users = ["root" "@wheel"];
   };
 }

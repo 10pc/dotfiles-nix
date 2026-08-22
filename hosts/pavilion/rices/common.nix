@@ -43,7 +43,7 @@
     let
       shellAliases = {
         cls = "clear";
-        hms = "nix run home-manager/master -- switch --flake .#\"$1\"";
+        hms = "nix run home-manager/master -- switch --flake .#$1";
       };
     in
     {
