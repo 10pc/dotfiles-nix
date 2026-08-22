@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   home.username = "kaupec1";
@@ -33,6 +38,39 @@
         ];
     })
   ];
+
+  programs =
+    let
+      shellAliases = {
+        cls = "clear";
+        hms = "nix run home-manager/master -- switch --flake .#\"$1\"";
+      };
+    in
+    {
+      zsh = {
+        enable = true;
+        autosuggestion.enable = true;
+        enableCompletion = true;
+        syntaxHighlighting.enable = true;
+
+        # left arrow and right arrow can move per-word
+        initContent = lib.mkAfter ''
+          bindkey "^[[1;5D" backward-word
+          bindkey "^[[1;5C" forward-word
+
+          export EDITOR="nvim"
+          eval "$(devenv hook zsh)"
+        '';
+        shellAliases = shellAliases;
+      };
+
+      git = {
+        settings = {
+          user.name = "10pc";
+          user.email = "108258202+10pc@users.noreply.github.com";
+        };
+      };
+    };
 
   home.stateVersion = "26.05";
 }

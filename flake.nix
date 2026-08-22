@@ -15,6 +15,10 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -22,6 +26,7 @@
       nixpkgs,
       lanzaboote,
       home-manager,
+      chaotic,
       ...
     }@inputs:
     let
@@ -39,6 +44,7 @@
           modules = [
             ./hosts/pavilion/configuration.nix
 
+            chaotic.nixosModules.default
             lanzaboote.nixosModules.lanzaboote
             ({ pkgs, lib, ... }: {
               environment.systemPackages = [
