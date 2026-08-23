@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-
+{ pkgs, ... }:
 {
   users.users."kaupec1" = {
     isNormalUser = true;

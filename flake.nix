@@ -47,7 +47,7 @@
         pavilion = lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
-            ./hosts/pavilion/configuration.nix
+            ./hosts/pavilion
 
             chaotic.nixosModules.default
             lanzaboote.nixosModules.lanzaboote

@@ -2,6 +2,6 @@
 
 {
   imports = [
-    ../common.nix
+    ../../../../modules/home
   ];
 }
