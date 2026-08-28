@@ -23,6 +23,14 @@
       url = "github:hyprwm/hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    spicetify = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    qml-language-server = {
+      url = "github:cushycush/qml-language-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -31,7 +39,8 @@
       lanzaboote,
       home-manager,
       chaotic,
-      hyprland,
+      quickshell,
+      qml-language-server,
       ...
     }@inputs:
     let
@@ -63,7 +72,11 @@
         };
         hyprland = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit inputs; };
+          extraSpecialArgs = {
+            inherit inputs;
+            quickshell = quickshell.packages.x86_64-linux.default;
+            qmlls = qml-language-server.packages.x86_64-linux.default;
+          };
           modules = [ ./hosts/pavilion/rices/hyprland/home.nix ];
         };
       };
