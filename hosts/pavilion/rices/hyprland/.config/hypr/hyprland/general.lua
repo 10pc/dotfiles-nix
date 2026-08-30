@@ -7,9 +7,12 @@ hl.monitor({
 
 hl.config({
   input = {
-    sensitivity = 0.2,
+    sensitivity = 0.3,
     touchpad = {
       natural_scroll = true
     }
+  },
+  general = {
+    allow_tearing = true
   }
 })

@@ -1,10 +1,29 @@
-{ ... }:
+{ pkgs, ... }:
 {
   time.timeZone = "Antarctica/Casey";
   i18n.defaultLocale = "en_US.UTF-8";
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "26.05";
+
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+      material-symbols
+      rubik
+      twemoji-color-font
+      noto-fonts-color-emoji
+    ];
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        monospace = [ "JetBrainsMono Nerd Font" ];
+        sansSerif = [ "Google Sans Flex" ];
+        serif = [ "Google Sans Flex" ];
+      };
+    };
+  };
 
   nix = {
     settings = {

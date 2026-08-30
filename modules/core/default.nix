@@ -4,7 +4,7 @@
     ./bootloader.nix
     ./hardware.nix
     ./network.nix
-    ./pipewire.nix
+    ./audio.nix
     ./system.nix
     ./user.nix
     ./services.nix

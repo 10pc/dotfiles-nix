@@ -77,7 +77,7 @@
             quickshell = quickshell.packages.x86_64-linux.default;
             qmlls = qml-language-server.packages.x86_64-linux.default;
           };
-          modules = [ ./hosts/pavilion/rices/hyprland/home.nix ];
+          modules = [ ./hosts/pavilion/rices/hyprland ];
         };
       };
     };
