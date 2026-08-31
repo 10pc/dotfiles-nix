@@ -1,48 +1,47 @@
-hl.config({
-    general = {
-        gaps_in  = 5,
-        gaps_out = 5,
+-- Disable blur for xwayland context menus
+hl.window_rule({match = {class = "^()$", title = "^()$" },                   no_blur = true })
 
-        border_size = 1,
+-- Disable blur for every window
+hl.window_rule({match = {class = ".*" }, no_blur = true })
 
-        col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
-        },
-
-        -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
-        resize_on_border = false,
-
-        -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
-        allow_tearing = true,
-
-        layout = "dwindle",
-    },
-
-    decoration = {
-        rounding       = 10,
-        rounding_power = 2,
-
-        -- Change transparency of focused and unfocused windows
-        active_opacity   = 1.0,
-        inactive_opacity = 1.0,
-
-        shadow = {
-            enabled      = true,
-            range        = 4,
-            render_power = 3,
-            color        = 0xee1a1a1a,
-        },
-
-        blur = {
-            enabled   = true,
-            size      = 3,
-            passes    = 1,
-            vibrancy  = 0.1696,
-        },
-    },
-
-    animations = {
-        enabled = true,
-    },
-})
+-- Floating
+hl.window_rule({match = {title = "^(Open File)(.*)$" },                      center = true})
+hl.window_rule({match = {title = "^(Open File)(.*)$" },                      float = true})
+hl.window_rule({match = {title = "^(Select a File)(.*)$" },                  center = true})
+hl.window_rule({match = {title = "^(Select a File)(.*)$" },                  float = true})
+hl.window_rule({match = {title = "^(Choose wallpaper)(.*)$" },               center = true})
+hl.window_rule({match = {title = "^(Choose wallpaper)(.*)$" },               float = true})
+hl.window_rule({match = {title = "^(Choose wallpaper)(.*)$" },               size = {"(monitor_w*0.60)", "(monitor_h*0.65)"} })
+hl.window_rule({match = {title = "^(Open Folder)(.*)$" },                    center = true})
+hl.window_rule({match = {title = "^(Open Folder)(.*)$" },                    float = true})
+hl.window_rule({match = {title = "^(Save As)(.*)$" },                        center = true})
+hl.window_rule({match = {title = "^(Save As)(.*)$" },                        float = true})
+hl.window_rule({match = {title = "^(Library)(.*)$" },                        center = true})
+hl.window_rule({match = {title = "^(Library)(.*)$" },                        float = true})
+hl.window_rule({match = {title = "^(File Upload)(.*)$" },                    center = true})
+hl.window_rule({match = {title = "^(File Upload)(.*)$" },                    float = true})
+hl.window_rule({match = {title = "^(.*)(wants to save)$" },                  center = true})
+hl.window_rule({match = {title = "^(.*)(wants to save)$" },                  float = true})
+hl.window_rule({match = {title = "^(.*)(wants to open)$" },                  center = true})
+hl.window_rule({match = {title = "^(.*)(wants to open)$" },                  float = true})
+hl.window_rule({match = {class = "^(blueberry\\.py)$" },                     float = true})
+hl.window_rule({match = {class = "^(guifetch)$" },                           float = true}) -- FlafyDev/guifetch
+hl.window_rule({match = {class = "^(pavucontrol)$" },                        float = true})
+hl.window_rule({match = {class = "^(pavucontrol)$" },                        size = {"(monitor_w*0.45)", "(monitor_h*0.45)"} })
+hl.window_rule({match = {class = "^(pavucontrol)$" },                        center = true})
+hl.window_rule({match = {class = "^(org.pulseaudio.pavucontrol)$" },         float = true})
+hl.window_rule({match = {class = "^(org.pulseaudio.pavucontrol)$" },         size = {"(monitor_w*0.45)", "(monitor_h*0.45)"} })
+hl.window_rule({match = {class = "^(org.pulseaudio.pavucontrol)$" },         center = true})
+hl.window_rule({match = {class = "^(nm-connection-editor)$" },               float = true})
+hl.window_rule({match = {class = "^(nm-connection-editor)$" },               size = {"(monitor_w*0.45)", "(monitor_h*0.45)"} })
+hl.window_rule({match = {class = "^(nm-connection-editor)$" },               center = true})
+hl.window_rule({match = {class = ".*plasmawindowed.*" },                     float = true})
+hl.window_rule({match = {class = "kcm_.*" },                                  float = true})
+hl.window_rule({match = {class = ".*bluedevilwizard" },                      float = true})
+hl.window_rule({match = {title = ".*Welcome" },                              float = true})
+hl.window_rule({match = {title = "^(illogical-impulse Settings)$" },         float = true})
+hl.window_rule({match = {title = ".*Shell conflicts.*" },                    float = true})
+hl.window_rule({match = {class = "org.freedesktop.impl.portal.desktop.kde" }, float = true})
+hl.window_rule({match = {class = "org.freedesktop.impl.portal.desktop.kde" }, size = {"(monitor_w*0.60)", "(monitor_h*0.65)"} })
+hl.window_rule({match = {class = "^(Zotero)$" },                             float = true})
+hl.window_rule({match = {class = "^(Zotero)$" },                             size = {"(monitor_w*0.45)", "(monitor_h*0.45)"} })
