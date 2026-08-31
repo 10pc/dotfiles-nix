@@ -17,7 +17,7 @@
 
   programs.quickshell = {
     enable = true;
-    package = quickshell;
+    package = pkgs.callPackage ./quickshell.nix { inherit quickshell; };
     configs = {
       default = .config/quickshell;
     };
